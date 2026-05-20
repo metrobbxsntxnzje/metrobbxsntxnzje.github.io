@@ -1,110 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Developer Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Thanh Binh | Portfolio</title>
+    <style>
+        /* --- PIXEL RESET & FONTS --- */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-    <link rel="stylesheet" href="style.css">
+        :root {
+            --bg-color: #0d1117;
+            --grid-color: #161b22;
+            --primary: #39da8a;
+            --primary-neon: #00ff66;
+            --text-main: #ffffff;
+            --text-muted: #8b949e;
+            --card-bg: #161b22;
+            --card-border: #30363d;
+            --pixel-size: 4px;
+        }
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'VT323', monospace;
+            letter-spacing: 0.5px;
+        }
 
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--text-main);
+            font-size: 20px;
+            line-height: 1.4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* --- PIXEL ART UI COMPONENTS --- */
+        
+        /* Pixel Border Effect */
+        .nes-border {
+            border: solid 4px var(--text-main);
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%23ffffff'/%3E%3C/svg%3E") 2 repeat;
+            position: relative;
+        }
+
+        .nes-border.theme-primary {
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2339da8a'/%3E%3C/svg%3E") 2 repeat;
+        }
+
+        .nes-border.theme-dark {
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2330363d'/%3E%3C/svg%3E") 2 repeat;
+        }
+
+        /* Pixel Button */
+        .pixel-btn {
+            display: inline-block;
+            position: relative;
+            padding: 10px 20px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 24px;
+            margin: 10px 5px;
+            border: solid 4px var(--text-main);
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%23ffffff'/%3E%3C/svg%3E") 2 repeat;
+        }
+
+        .pixel-btn:active {
+            transform: translateY(2px);
+        }
+
+        .pixel-btn.primary {
+            background: var(--primary);
+            color: var(--bg-color);
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2300ff66'/%3E%3C/svg%3E") 2 repeat;
+        }
+
+        .pixel-btn.primary:hover {
+            box-shadow: 0 0 10px var(--primary-neon);
+        }
+
+        /* Thẻ Tag Pixel */
+        .pixel-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #21262d;
+            border: 2px solid var(--card-border);
+            color: var(--primary);
+            font-size: 18px;
+            margin: 4px;
+        }
+
+        /* Tiêu đề Section phong cách Arcade */
+        .section-title {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before {
+            content: "> ";
+            margin-right: 10px;
+            color: var(--text-main);
+            animation: blink 0.8s infinite;
+        }
+
+        /* --- PURE CSS PIXEL ART AVATAR (Developer Character) --- */
+        .pixel-avatar {
+            width: 64px;
+            height: 64px;
+            position: relative;
+            transform: scale(2.5);
+            transform-origin: top center;
+            margin: 20px auto 40px auto;
+        }
+
+        /* Vẽ nhân vật bằng Box-shadow của 1 phần tử duy nhất */
+        .pixel-char {
+            width: 4px;
+            height: 4px;
+            background: transparent;
+            box-shadow:
+                /* Tóc đen/xám */
+                16px 4px #21262d, 20px 4px #21262d, 24px 4px #21262d, 28px 4px #21262d,
+                12px 8px #21262d, 16px 8px #444, 20px 8px #444, 24px 8px #444, 28px 8px #444, 32px 8px #21262d,
+                12px 12px #21262d, 16px 12px #444, 20px 12px #ffddb3, 24px 12px #ffddb3, 28px 12px #444, 32px 12px #21262d,
+                /* Mắt kính xanh Neon của Coder */
+                12px 16px #21262d, 16px 16px #00ff66, 20px 16px #00ff66, 24px 16px #21262d, 28px 16px #00ff66, 32px 16px #00ff66, 36px 16px #21262d,
+                /* Khuôn mặt */
+                12px 20px #21262d, 16px 20px #ffddb3, 20px 20px #ffddb3, 24px 20px #ffddb3, 28px 20px #ffddb3, 32px 20px #ffddb3, 36px 20px #21262d,
+                16px 24px #21262d, 20px 24px #ffddb3, 24px 24px #ffddb3, 28px 24px #ffddb3, 32px 24px #21262d,
+                /* Áo Hoodie màu Xanh Lá */
+                16px 28px #39da8a, 20px 28px #39da8a, 24px 28px #161b22, 28px 28px #39da8a, 32px 28px #39da8a,
+                12px 32px #39da8a, 16px 32px #39da8a, 20px 32px #39da8a, 24px 32px #39da8a, 28px 32px #39da8a, 32px 32px #39da8a, 36px 32px #39da8a,
+                8px 36px #21262d, 12px 36px #39da8a, 16px 36px #39da8a, 20px 36px #39da8a, 24px 36px #39da8a, 28px 36px #39da8a, 32px 36px #39da8a, 36px 36px #39da8a, 40px 36px #21262d,
+                8px 40px #21262d, 12px 40px #1f6b43, 16px 40px #39da8a, 20px 40px #39da8a, 24px 40px #39da8a, 28px 40px #39da8a, 32px 40px #39da8a, 36px 40px #1f6b43, 40px 40px #21262d,
+                /* Quần và chân */
+                12px 44px #21262d, 16px 44px #21262d, 32px 44px #21262d, 36px 44px #21262d,
+                12px 48px #ffddb3, 36px 48px #ffddb3;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* --- LAYOUT SECTIONS --- */
+
+        /* Header / Navbar Nav */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--card-bg);
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links a {
+            margin-left: 20px;
+            color: var(--text-main);
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--card-bg);
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 5px;
+            color: var(--text-main);
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 600px;
+            color: var(--text-muted);
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        /* Generic Layout & Section Management */
+        section {
+            margin-bottom: 50px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* Cards Layout */
+        .pixel-card {
+            background: var(--card-bg);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 4px dashed var(--card-border);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 26px;
+            color: var(--primary);
+        }
+
+        .card-date {
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        .card-body ul {
+            list-style: none;
+            padding-left: 15px;
+        }
+
+        .card-body ul li::before {
+            content: "* ";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .card-tags {
+            margin-top: 15px;
+        }
+
+        /* Contact Details & Info */
+        .info-list {
+            list-style: none;
+        }
+        .info-list li {
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+        .info-list span {
+            color: var(--primary);
+            display: inline-block;
+            width: 100px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-muted);
+            border-top: 4px dashed var(--card-border);
+            font-size: 18px;
+        }
+
+        /* --- ANIMATIONS & KEYFRAMES --- */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .grid-2col {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links a {
+                margin: 0 10px;
+            }
+            .hero h1 {
+                font-size: 38px;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-    <nav>
+    <div class="container">
+        
+        <!-- HEADER INTERFACE -->
+        <header class="nes-border theme-dark">
+            <div class="logo">LTB_OS v1.0.0</div>
+            <nav class="nav-links">
+                <a href="#about">/About</a>
+                <a href="#projects">/Projects</a>
+                <a href="#skills">/Skills</a>
+                <a href="#contact">/Contact</a>
+            </nav>
+        </header>
 
-        <h2 class="logo">MyPortfolio</h2>
-
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#experience">Experience</a></li>
-        </ul>
-
-    </nav>
-
-
-
-    <section class="hero">
-
-        <h1>Hello, I'm <span>bbxsntxnjedev</span></h1>
-
-        <!-- <p>Building web applications and software.</p> -->
-
-        <a class="btn">View Projects</a>
-
-    </section>
-
-
-
-    <section id="about" class="section">
-
-        <h2>About</h2>
-
-        <p>
-            Hi, I'm bbxsntxnjedev – an Information Technology student at Saigon University (SGU).
-            I enjoy building desktop applications, backend systems, and exploring new technologies.
+        <!-- HERO SECTION -->
+        <section class="hero nes-border theme-primary">
+            <!-- Nhân vật Pixel đại diện -->
+            <div class="pixel-avatar">
+                <div class="pixel-char"></div>
+            </div>
+            
+            <h1>bbxntxnxzje</h1>
+            <h2>Software Engineering Student / Backend Developer Intern</h2>
+            <p>
+                An enthusiastic student based in Ho Chi Minh City, passionate about building efficient, scalable backend structures and interactive code environments.
             </p>
+            <div>
+                <a href="#contact" class="pixel-btn primary">Hire_Me.exe</a>
+                <a href="https://github.com/metrobbxsntxnzje" target="_blank" class="pixel-btn">GitHub_Profile</a>
+            </div>
+        </section>
 
-    </section>
+        <!-- TWO COLUMN BOX (ABOUT & EDUCATION) -->
+        <div class="grid-2col">
+            <!-- ABOUT / OBJECTIVE -->
+            <section id="about" class="pixel-card nes-border theme-dark">
+                <h3 class="section-title">Objective</h3>
+                <p style="color: var(--text-muted); font-size: 22px;">
+                    Seeking a Software Developer Intern position with a focus on backend development. Eager to collaborate, design underlying system architectures, learn from seasoned engineers, and gain comprehensive hands-on experience in production environments.
+                </p>
+                <br>
+                <h3 class="section-title">Hobbies</h3>
+                <div class="pixel-tag">Gym Training & Fitness</div>
+            </section>
 
-
-
-    <section id="skills" class="section">
-
-        <h2>Skills</h2>
-
-        <div class="skills">
-
-            <div class="skill">Java</div>
-            <div class="skill">React</div>
-            <div class="skill">Python</div>
-            <div class="skill">JavaScript</div>
-            <div class="skill">Vue</div>
-            <div class="skill">HTML</div>
-            <div class="skill">CSS</div>
-
-        </div>
-
-    </section>
-
-
-
-    <div id="projects-container"></div>
-
-
-
-
-    <section id="experience" class="section">
-
-        <h2>Experience</h2>
-
-        <div class="experience-timeline">
-
-            <div class="timeline-item">
-                <span class="timeline-date">2022 – 2026</span>
-                <p>Saigon University (SGU) – Currently studying</p>
+            <!-- EDUCATION -->
+            <section id="education" class="pixel-card nes-border theme-dark">
+                <h3 class="section-title">Education</h3>
+                <div class="card-header">
+                    <span class="card-title" style="color: #fff;">Saigon University</span>
+                    <span class="card-date">2022 - Present</span>
                 </div>
-
-            
-
-            
-
+                <p style="color: var(--primary); font-size: 22px; margin-bottom: 5px;">Final-year Information Technology student</p>
+                <p style="color: var(--text-muted);">Focusing on advanced computing paradigms, data frameworks, algorithm tracking, and modern development methodology systems.</p>
+            </section>
         </div>
 
-    </section>
+        <!-- PROJECTS SECTION -->
+        <section id="projects">
+            <h3 class="section-title">Core_Projects</h3>
 
+            <!-- Project 1 -->
+            <div class="pixel-card nes-border theme-dark">
+                <div class="card-header">
+                    <span class="card-title">1. RAG-based Question Answering System</span>
+                    <span class="card-date">2026</span>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Built a robust RAG pipeline supporting PDF/DOCX multi-document ingestion.</li>
+                        <li>Implemented high-efficiency hybrid retrieval combining FAISS semantic dense vectors with BM25 keyword matching strings.</li>
+                        <li>Ranked context payloads accurately using Reciprocal Rank Fusion architectures.</li>
+                        <li>Integrated HuggingFace structural embeddings and custom local LLM inference engines utilizing Ollama runtimes.</li>
+                        <li>Applied specialized metadata tracking, indexing filters, and data deduplication.</li>
+                    </ul>
+                    <div class="card-tags">
+                        <span class="pixel-tag">Python</span>
+                        <span class="pixel-tag">LangChain</span>
+                        <span class="pixel-tag">FAISS</span>
+                        <span class="pixel-tag">Ollama</span>
+                        <span class="pixel-tag">HuggingFace</span>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Project 2 -->
+            <div class="pixel-card nes-border theme-dark">
+                <div class="card-header">
+                    <span class="card-title">2. Movie Discovery Web App</span>
+                    <span class="card-date">2026</span>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Integrated third-party TMDB REST API hooks to actively parse live query data streams, movie stats, and rich trailers.</li>
+                        <li>Constructed local search indexes, dynamic item category filters, and isolated dynamic routes via Vue Router stacks.</li>
+                        <li>Managed multiple concurrent asynchronous state engines through Axios handlers alongside fallback screen loads.</li>
+                    </ul>
+                    <div class="card-tags">
+                        <span class="pixel-tag">Vue 3</span>
+                        <span class="pixel-tag">JavaScript</span>
+                        <span class="pixel-tag">TMDB API</span>
+                        <span class="pixel-tag">Axios</span>
+                        <span class="pixel-tag">Vue Router</span>
+                    </div>
+                </div>
+            </div>
 
-    <footer>
+            <!-- Project 3 -->
+            <div class="pixel-card nes-border theme-dark">
+                <div class="card-header">
+                    <span class="card-title">3. Training Program Management System</span>
+                    <span class="card-date">2025</span>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Engineered a fully secure system infrastructure to handle academic schedules and system-wide curriculum paths.</li>
+                        <li>Assembled decoupled functional controllers and concrete data mapping services using an MVC blueprint.</li>
+                        <li>Shipped integrated control blocks for bulk course scheduling, curriculum mappings, and safe data updates.</li>
+                        <li>Rendered validated server-side UI presentation contexts built over flexible JSP engines.</li>
+                    </ul>
+                    <div class="card-tags">
+                        <span class="pixel-tag">Spring Boot</span>
+                        <span class="pixel-tag">Java</span>
+                        <span class="pixel-tag">MySQL</span>
+                        <span class="pixel-tag">MVC Pattern</span>
+                        <span class="pixel-tag">JSP</span>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Project 4 -->
+            <div class="pixel-card nes-border theme-dark">
+                <div class="card-header">
+                    <span class="card-title">4. Quiz & Examination Management System</span>
+                    <span class="card-date">2025</span>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Programmed a reliable desktop utility layout built to construct, host, and grade multiple-choice test banks.</li>
+                        <li>Developed secure assessment templates, custom question generators, and isolated grading computations.</li>
+                        <li>Mapped optimized schema models back to active SQL Server file instances for structured data retrieval.</li>
+                        <li>Enforced OOP architecture strategies separating layout components completely from processing boundaries.</li>
+                    </ul>
+                    <div class="card-tags">
+                        <span class="pixel-tag">C#</span>
+                        <span class="pixel-tag">WinForms</span>
+                        <span class="pixel-tag">.NET</span>
+                        <span class="pixel-tag">SQL Server</span>
+                        <span class="pixel-tag">OOP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    </footer>
-    <script src="script.js"></script>
+        <!-- TECHNICAL SKILLS SECTION -->
+        <section id="skills" class="pixel-card nes-border theme-dark">
+            <h3 class="section-title">Technical_Skills</h3>
+            
+            <div style="margin-bottom: 15px;">
+                <p style="color: var(--text-main); margin-bottom: 5px;">[Languages]</p>
+                <span class="pixel-tag">Java</span> <span class="pixel-tag">C#</span> <span class="pixel-tag">Python</span> 
+                <span class="pixel-tag">JavaScript</span> <span class="pixel-tag">SQL</span> <span class="pixel-tag">C/C++</span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p style="color: var(--text-main); margin-bottom: 5px;">[Frameworks & Libraries]</p>
+                <span class="pixel-tag">Spring Boot</span> <span class="pixel-tag">Vue 3</span> <span class="pixel-tag">.NET WinForms</span> 
+                <span class="pixel-tag">LangChain</span> <span class="pixel-tag">Axios</span> <span class="pixel-tag">React</span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p style="color: var(--text-main); margin-bottom: 5px;">[Databases & Storage]</p>
+                <span class="pixel-tag">MySQL</span> <span class="pixel-tag">SQL Server</span> <span class="pixel-tag">FAISS (Vector DB)</span>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p style="color: var(--text-main); margin-bottom: 5px;">[Developer Tools]</p>
+                <span class="pixel-tag">Git</span> <span class="pixel-tag">GitHub</span> <span class="pixel-tag">Postman</span> 
+                <span class="pixel-tag">Ollama</span> <span class="pixel-tag">Figma</span> <span class="pixel-tag">Overleaf</span>
+            </div>
+
+            <div>
+                <p style="color: var(--text-main); margin-bottom: 5px;">[Core Architectural Concepts]</p>
+                <span class="pixel-tag">REST API</span> <span class="pixel-tag">MVC Pattern</span> <span class="pixel-tag">OOP</span> 
+                <span class="pixel-tag">RAG Pipeline</span> <span class="pixel-tag">SPA (Single Page App)</span>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="pixel-card nes-border theme-primary">
+            <h3 class="section-title" style="color: var(--bg-color);">Establish_Connection</h3>
+            <div class="grid-2col" style="color: var(--bg-color);">
+                <div>
+                    <ul class="info-list">
+                        <li><span style="color: var(--bg-color); font-weight: bold;">Loc:</span> Ho Chi Minh City, VN</li>
+                        <li><span style="color: var(--bg-color); font-weight: bold;">Email:</span> <a href="mailto:binhle.230204@gmail.com" style="color: #ffffff; text-decoration: underline;">binhle.230204@gmail.com</a></li>
+                        <li><span style="color: var(--bg-color); font-weight: bold;">Phone:</span> </li>
+                        <li><span style="color: var(--bg-color); font-weight: bold;">GitHub:</span> <a href="https://github.com/metrobbxsntxnzje" target="_blank" style="color: #ffffff; text-decoration: underline;">github.com/metrobbxsntxnzje</a></li>
+                    </ul>
+                </div>
+                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">PING LTB_SERVER...</p>
+                    <p style="font-size: 20px;">Ready for new engineering milestones.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <p>2026 Le Thanh Binh.</p>
+        </footer>
+
+    </div>
 
 </body>
-
 </html>
