@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Thanh Binh | Portfolio</title>
+    <title>Le Thanh Binh | Sci-Fi Dev Terminal</title>
     <style>
-        /* --- PIXEL RESET & FONTS --- */
+        /* --- CORE CONFIGURATION & RETRO SCI-FI FONTS --- */
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
         :root {
-            --bg-color: #0d1117;
-            --grid-color: #161b22;
-            --primary: #39da8a;
+            --bg-deep: #05080c;
+            --bg-surface: #0b121f;
+            --border-core: #1e314e;
             --primary-neon: #00ff66;
-            --text-main: #ffffff;
-            --text-muted: #8b949e;
-            --card-bg: #161b22;
-            --card-border: #30363d;
-            --pixel-size: 4px;
+            --primary-glow: rgba(0, 255, 102, 0.3);
+            --primary-dark: #0a3c20;
+            --text-pure: #ffffff;
+            --text-ghost: #7d93b2;
+            --alien-purple: #1a0f30;
         }
 
         * {
@@ -25,304 +25,700 @@
             margin: 0;
             padding: 0;
             font-family: 'VT323', monospace;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-deep);
+            /* Lưới Cyberpunk ma trận kết hợp hiệu ứng quét ngang */
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--text-main);
-            font-size: 20px;
-            line-height: 1.4;
+                linear-gradient(rgba(0, 255, 102, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 102, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: var(--text-pure);
+            font-size: 21px;
+            line-height: 1.5;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Scanline effect chạy dọc toàn màn hình tăng vibe hacker */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 99999;
+            opacity: 0.6;
+            pointer-events: none;
+            background-size: 100% 4px, 6px 100%;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
         a {
-            color: var(--primary);
+            color: var(--primary-neon);
             text-decoration: none;
+            transition: all 0.2s steps(4);
         }
 
-        /* --- PIXEL ART UI COMPONENTS --- */
+        /* --- UPGRADED ADVANCED PIXEL ART UI SPEC --- */
         
-        /* Pixel Border Effect */
-        .nes-border {
-            border: solid 4px var(--text-main);
+        /* Sci-Fi Pixel Border Module */
+        .alien-border {
+            border: solid 4px var(--text-pure);
             border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%23ffffff'/%3E%3C/svg%3E") 2 repeat;
-            position: relative;
         }
 
-        .nes-border.theme-primary {
-            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2339da8a'/%3E%3C/svg%3E") 2 repeat;
+        .alien-border.neon-glow {
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2300ff66'/%3E%3C/svg%3E") 2 repeat;
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        .nes-border.theme-dark {
-            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2330363d'/%3E%3C/svg%3E") 2 repeat;
+        .alien-border.dark-tech {
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%231e314e'/%3E%3C/svg%3E") 2 repeat;
         }
 
-        /* Pixel Button */
-        .pixel-btn {
+        /* Game UI Futuristic Buttons */
+        .pixel-btn-futuristic {
             display: inline-block;
-            position: relative;
-            padding: 10px 20px;
-            background: var(--card-bg);
-            color: var(--text-main);
+            padding: 12px 24px;
+            background: var(--bg-surface);
+            color: var(--text-pure);
+            font-size: 24px;
             text-transform: uppercase;
             cursor: pointer;
-            font-size: 24px;
-            margin: 10px 5px;
-            border: solid 4px var(--text-main);
-            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%23ffffff'/%3E%3C/svg%3E") 2 repeat;
+            margin: 10px 8px;
+            position: relative;
+            border: solid 4px var(--border-core);
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%231e314e'/%3E%3C/svg%3E") 2 repeat;
         }
 
-        .pixel-btn:active {
-            transform: translateY(2px);
-        }
-
-        .pixel-btn.primary {
-            background: var(--primary);
-            color: var(--bg-color);
+        .pixel-btn-futuristic:hover {
+            color: var(--bg-deep);
+            background: var(--primary-neon);
             border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2300ff66'/%3E%3C/svg%3E") 2 repeat;
+            box-shadow: 0 0 20px var(--primary-neon);
+            transform: scale(1.05) translateY(-2px);
         }
 
-        .pixel-btn.primary:hover {
-            box-shadow: 0 0 10px var(--primary-neon);
+        .pixel-btn-futuristic::before {
+            content: "[ ";
+            color: var(--primary-neon);
+        }
+        .pixel-btn-futuristic::after {
+            content: " ]";
+            color: var(--primary-neon);
         }
 
-        /* Thẻ Tag Pixel */
-        .pixel-tag {
+        /* Advanced Pixel Tag Chips */
+        .pixel-chip {
             display: inline-block;
-            padding: 2px 8px;
-            background: #21262d;
-            border: 2px solid var(--card-border);
-            color: var(--primary);
-            font-size: 18px;
-            margin: 4px;
+            padding: 4px 12px;
+            background: rgba(30, 49, 78, 0.4);
+            border-left: 4px solid var(--primary-neon);
+            border-right: 4px solid var(--primary-neon);
+            color: var(--text-pure);
+            font-size: 19px;
+            margin: 5px;
+            position: relative;
+        }
+        
+        .pixel-chip:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 0 8px var(--primary-neon);
+            color: var(--primary-neon);
         }
 
-        /* Tiêu đề Section phong cách Arcade */
+        /* Section Header Arcade Interface */
         .section-title {
-            font-size: 36px;
-            color: var(--primary);
-            margin-bottom: 25px;
+            font-size: 38px;
+            color: var(--primary-neon);
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--primary-glow);
             display: flex;
             align-items: center;
         }
         
         .section-title::before {
-            content: "> ";
-            margin-right: 10px;
-            color: var(--text-main);
-            animation: blink 0.8s infinite;
+            content: "◆";
+            margin-right: 12px;
+            color: var(--text-pure);
+            animation: pulse-glow 1s infinite alternate;
         }
 
-        /* --- PURE CSS PIXEL ART AVATAR (Developer Character) --- */
-        .pixel-avatar {
-            width: 64px;
-            height: 64px;
+        /* --- 1. PREMIUM ALIEN TECH PIXEL ART AVATAR --- */
+        .avatar-container {
             position: relative;
-            transform: scale(2.5);
-            transform-origin: top center;
-            margin: 20px auto 40px auto;
+            width: 160px;
+            height: 180px;
+            margin: 20px auto 30px auto;
         }
 
-        /* Vẽ nhân vật bằng Box-shadow của 1 phần tử duy nhất */
-        .pixel-char {
+        /* Hiệu ứng hào quang năng lượng xanh mặt sau (Green Energy Aura) */
+        .alien-aura {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(0,255,102,0.4) 0%, transparent 70%);
+            filter: blur(8px);
+            animation: pulse-glow 2s infinite alternate;
+            z-index: 1;
+        }
+
+        /* Vẽ nhân vật bằng Box-shadow đa lớp từ 1 pixel nguyên tử */
+        .pixel-alien-char {
             width: 4px;
             height: 4px;
             background: transparent;
+            position: absolute;
+            z-index: 3;
+            transform: scale(2.5);
+            transform-origin: top left;
+            /* Bản đồ ma trận màu vẽ Alien Futuristic Hacker */
             box-shadow:
-                /* Tóc đen/xám */
-                16px 4px #21262d, 20px 4px #21262d, 24px 4px #21262d, 28px 4px #21262d,
-                12px 8px #21262d, 16px 8px #444, 20px 8px #444, 24px 8px #444, 28px 8px #444, 32px 8px #21262d,
-                12px 12px #21262d, 16px 12px #444, 20px 12px #ffddb3, 24px 12px #ffddb3, 28px 12px #444, 32px 12px #21262d,
-                /* Mắt kính xanh Neon của Coder */
-                12px 16px #21262d, 16px 16px #00ff66, 20px 16px #00ff66, 24px 16px #21262d, 28px 16px #00ff66, 32px 16px #00ff66, 36px 16px #21262d,
-                /* Khuôn mặt */
-                12px 20px #21262d, 16px 20px #ffddb3, 20px 20px #ffddb3, 24px 20px #ffddb3, 28px 20px #ffddb3, 32px 20px #ffddb3, 36px 20px #21262d,
-                16px 24px #21262d, 20px 24px #ffddb3, 24px 24px #ffddb3, 28px 24px #ffddb3, 32px 24px #21262d,
-                /* Áo Hoodie màu Xanh Lá */
-                16px 28px #39da8a, 20px 28px #39da8a, 24px 28px #161b22, 28px 28px #39da8a, 32px 28px #39da8a,
-                12px 32px #39da8a, 16px 32px #39da8a, 20px 32px #39da8a, 24px 32px #39da8a, 28px 32px #39da8a, 32px 32px #39da8a, 36px 32px #39da8a,
-                8px 36px #21262d, 12px 36px #39da8a, 16px 36px #39da8a, 20px 36px #39da8a, 24px 36px #39da8a, 28px 36px #39da8a, 32px 36px #39da8a, 36px 36px #39da8a, 40px 36px #21262d,
-                8px 40px #21262d, 12px 40px #1f6b43, 16px 40px #39da8a, 20px 40px #39da8a, 24px 40px #39da8a, 28px 40px #39da8a, 32px 40px #39da8a, 36px 40px #1f6b43, 40px 40px #21262d,
-                /* Quần và chân */
-                12px 44px #21262d, 16px 44px #21262d, 32px 44px #21262d, 36px 44px #21262d,
-                12px 48px #ffddb3, 36px 48px #ffddb3;
-            animation: float 3s ease-in-out infinite;
+                /* Mũ trùm Cyber Suit (Xám sẫm & Đen) */
+                16px 4px #121824, 20px 4px #121824, 24px 4px #121824, 28px 4px #121824,
+                12px 8px #121824, 16px 8px #223147, 20px 8px #223147, 24px 8px #223147, 28px 8px #223147, 32px 8px #121824,
+                12px 12px #121824, 16px 12px #223147, 20px 12px #0a3c20, 24px 12px #0a3c20, 28px 12px #223147, 32px 12px #121824,
+                /* Hệ thống kính lọc/Mắt phát sáng xanh Neon (Glowing Green Eyes) */
+                8px 16px #121824, 12px 16px #00ff66, 16px 16px #00ff66, 20px 16px #121824, 24px 16px #121824, 28px 16px #00ff66, 32px 16px #00ff66, 36px 16px #121824,
+                /* Da cơ thể người ngoài hành tinh (Alien Pale Skin / Light Aqua-Green) */
+                12px 20px #121824, 16px 20px #7efcb3, 20px 20px #7efcb3, 24px 20px #7efcb3, 28px 20px #7efcb3, 32px 20px #7efcb3, 36px 20px #121824,
+                16px 24px #121824, 20px 24px #7efcb3, 24px 24px #121824, 28px 24px #7efcb3, 32px 24px #121824,
+                /* Giáp Cyber Suit nâng cao tích hợp lõi năng lượng lớn ở ngực */
+                16px 28px #121824, 20px 28px #223147, 24px 28px #00ff66, 28px 28px #223147, 32px 28px #121824,
+                12px 32px #223147, 16px 32px #223147, 20px 32px #00ff66, 24px 32px #00ff66, 28px 32px #00ff66, 32px 32px #223147, 36px 32px #223147,
+                /* Cánh tay trái đeo đồng hồ công nghệ tương tự Omnitrix (Futuristic Core Core Watch) */
+                8px 36px #121824, 12px 36px #00ff66, 16px 36px #223147, 20px 36px #223147, 24px 36px #223147, 28px 36px #223147, 32px 36px #223147, 36px 36px #121824,
+                8px 40px #121824, 12px 40px #00ff66, 16px 40px #121824, 20px 40px #121824, 24px 40px #121824, 28px 40px #121824, 32px 40px #121824, 36px 40px #121824;
+            animation: floating-char 3.5s ease-in-out infinite;
         }
 
-        /* --- LAYOUT SECTIONS --- */
+        /* Các hạt năng lượng bay lơ lửng xung quanh nhân vật (Pixel Energy Particles) */
+        .energy-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-neon);
+            box-shadow: 0 0 6px var(--primary-neon);
+            z-index: 2;
+        }
+        .ep-1 { top: 20px; left: 10px; animation: float-p 4s infinite linear; }
+        .ep-2 { top: 80px; right: 15px; animation: float-p 3s infinite linear 1s; }
+        .ep-3 { bottom: 30px; left: 30px; animation: float-p 5s infinite linear 0.5s; }
 
-        /* Header / Navbar Nav */
+        /* --- 2. UPGRADED HERO SECTION --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, var(--bg-surface) 0%, rgba(11, 18, 31, 0.8) 100%);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Biểu tượng Alien trôi nổi ẩn sau nền cánh */
+        .hero::after {
+            content: "▰▱ ◆ ▰▱";
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 16px;
+            color: rgba(0, 255, 102, 0.15);
+            letter-spacing: 4px;
+        }
+
+        .hero h1 {
+            font-size: 54px;
+            color: var(--text-pure);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+            margin-bottom: 5px;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            color: var(--primary-neon);
+            text-shadow: 0 0 12px var(--primary-glow);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 680px;
+            color: var(--text-ghost);
+            font-size: 23px;
+            margin-bottom: 30px;
+        }
+
+        /* --- NAVIGATION SYSTEM --- */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background: var(--card-bg);
+            padding: 16px 24px;
+            background: var(--bg-surface);
             margin-bottom: 40px;
         }
 
         .logo {
             font-size: 28px;
             font-weight: bold;
-            color: var(--primary);
+            color: var(--primary-neon);
+            text-shadow: 0 0 8px var(--primary-glow);
         }
 
         .nav-links a {
-            margin-left: 20px;
-            color: var(--text-main);
+            margin-left: 24px;
+            color: var(--text-pure);
+            font-size: 22px;
         }
         .nav-links a:hover {
-            color: var(--primary);
-            text-decoration: underline;
+            color: var(--primary-neon);
+            text-shadow: 0 0 6px var(--primary-neon);
         }
 
-        /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--card-bg);
-            margin-bottom: 40px;
+        /* --- MAIN CARDS & GRID LAYOUT --- */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
 
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 5px;
-            color: var(--text-main);
-        }
-
-        .hero h2 {
-            font-size: 28px;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            max-width: 600px;
-            color: var(--text-muted);
-            font-size: 22px;
-            margin-bottom: 25px;
-        }
-
-        /* Generic Layout & Section Management */
         section {
             margin-bottom: 50px;
         }
 
-        .grid-2col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
+        /* 4. UI Style Nâng Cấp: Project Cards */
+        .pixel-card {
+            background: var(--bg-surface);
+            padding: 24px;
+            margin-bottom: 30px;
+            transition: transform 0.3s steps(4), box-shadow 0.3s steps(4), border-color 0.3s steps(4);
         }
 
-        /* Cards Layout */
-        .pixel-card {
-            background: var(--card-bg);
-            padding: 20px;
-            margin-bottom: 25px;
+        .pixel-card:hover {
+            transform: translateY(-6px);
+            border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zm2-2h2v2H2zm2 2h2v2H4zm-2 2h2v2H2z' fill='%2300ff66'/%3E%3C/svg%3E") 2 repeat;
+            box-shadow: 0 10px 20px rgba(0, 255, 102, 0.15), inset 0 0 12px rgba(0, 255, 102, 0.05);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            border-bottom: 4px dashed var(--card-border);
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+            border-bottom: 4px dashed var(--border-core);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
         }
 
         .card-title {
             font-size: 26px;
-            color: var(--primary);
+            color: var(--primary-neon);
+            font-weight: bold;
         }
 
         .card-date {
-            font-size: 18px;
-            color: var(--text-muted);
+            font-size: 19px;
+            color: var(--text-ghost);
         }
 
         .card-body ul {
             list-style: none;
-            padding-left: 15px;
+            padding-left: 5px;
+        }
+
+        .card-body ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+            color: #e2e8f0;
         }
 
         .card-body ul li::before {
-            content: "* ";
-            color: var(--primary);
-            font-weight: bold;
+            content: "➔";
+            position: absolute;
+            left: 0;
+            color: var(--primary-neon);
         }
 
         .card-tags {
-            margin-top: 15px;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 4px dashed rgba(30, 49, 78, 0.5);
         }
 
-        /* Contact Details & Info */
+        /* Info Display System */
         .info-list {
             list-style: none;
         }
         .info-list li {
-            margin-bottom: 12px;
-            font-size: 22px;
+            margin-bottom: 14px;
+            font-size: 23px;
         }
         .info-list span {
-            color: var(--primary);
+            color: var(--primary-neon);
             display: inline-block;
-            width: 100px;
+            width: 110px;
         }
 
+        /* --- 3. PREMIUM READABLE FOOTER --- */
         footer {
+            background-color: #040d1a;
+            border-top: 4px solid var(--primary-neon);
+            box-shadow: 0 -10px 20px rgba(0, 255, 102, 0.1);
+            padding: 40px 20px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .footer-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-info {
+            color: var(--text-pure);
+            font-size: 22px;
+        }
+
+        .footer-info span {
+            color: var(--primary-neon);
+            font-weight: bold;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-nav a {
+            color: #ffffff;
+            font-size: 22px;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 2px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--primary-neon);
+            border-bottom: 2px solid var(--primary-neon);
+            text-shadow: 0 0 8px var(--primary-neon);
+        }
+
+        .footer-credits {
+            width: 100%;
             text-align: center;
-            padding: 30px 0;
-            color: var(--text-muted);
-            border-top: 4px dashed var(--card-border);
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 4px dashed rgba(30, 49, 78, 0.6);
+            color: var(--text-ghost);
             font-size: 18px;
         }
+        /* --- ADVANCED 3D ENGINE & MATRIX AURA SYSTEM --- */
+.avatar-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 10px auto 40px auto;
+    perspective: 1000px; /* Thiết lập chiều sâu phối cảnh 3D */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        /* --- ANIMATIONS & KEYFRAMES --- */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+/* Hệ thống hào quang năng lượng 3D (.alien-aura nâng cấp) */
+.alien-aura-system {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transform: rotateX(60deg) rotateZ(0deg);
+    animation: aura-system-rotate 12s linear infinite;
+    z-index: 1;
+}
+
+/* Lưới tọa độ ma trận thu nhỏ dưới chân nhân vật */
+.matrix-grid-floor {
+    position: absolute;
+    top: 10%; left: 10%; width: 80%; height: 80%;
+    background-image: 
+        linear-gradient(var(--primary-neon) 1px, transparent 1px),
+        linear-gradient(90deg, var(--primary-neon) 1px, transparent 1px);
+    background-size: 10px 10px;
+    opacity: 0.15;
+    border: 2px solid var(--primary-neon);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* Các vòng năng lượng xoay đồng tâm lệch trục tạo chiều sâu */
+.energy-ring {
+    position: absolute;
+    border: 4px dashed var(--primary-neon);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px var(--primary-glow), inset 0 0 15px var(--primary-glow);
+}
+.ring-outer {
+    width: 180px; height: 180px;
+    animation: spin-ring 6s linear infinite;
+}
+.ring-middle {
+    width: 130px; height: 130px;
+    border-color: #ffffff;
+    border-style: dotted;
+    animation: spin-ring-reverse 4s linear infinite;
+}
+.ring-inner {
+    width: 80px; height: 80px;
+    animation: spin-ring 2s linear infinite;
+}
+
+/* Sóng xung kích năng lượng phát tán theo chu kỳ */
+.pulse-wave {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 20px; height: 20px;
+    border: 4px solid var(--primary-neon);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) translateZ(0);
+    opacity: 0;
+    animation: wave-expand 3s steps(8) infinite;
+}
+
+/* --- CINEMATIC TRANSFORMATION ENGINE --- */
+.pixel-avatar-wrapper3d {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    transform-style: preserve-3d;
+    transform: scale(2.6) translateZ(20px); /* Đẩy nhân vật lên cao so với luồng aura nền */
+    z-index: 3;
+    animation: avatar-float 4s ease-in-out infinite;
+}
+
+/* Khung xương cơ bản cho các trạng thái nhân vật */
+.char-state {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: transparent;
+    opacity: 0;
+    transform-origin: top left;
+}
+
+/* FORM 0: Bản thể Coder thông thường (0s -> 6s) */
+.human-dev-form {
+    animation: form-human-loop 18s steps(1) infinite;
+    box-shadow:
+        /* Tóc đen */
+        16px 4px #121824, 20px 4px #121824, 24px 4px #121824, 28px 4px #121824,
+        12px 8px #121824, 16px 8px #2d3748, 20px 8px #2d3748, 24px 8px #2d3748, 28px 8px #2d3748, 32px 8px #121824,
+        12px 12px #121824, 16px 12px #2d3748, 20px 12px #ffddb3, 24px 12px #ffddb3, 28px 12px #2d3748, 32px 12px #121824,
+        /* Kính thường */
+        8px 16px #121824, 12px 16px #4a5568, 16px 16px #4a5568, 20px 16px #121824, 24px 16px #121824, 28px 16px #4a5568, 32px 16px #4a5568, 36px 16px #121824,
+        /* Diện mạo */
+        12px 20px #121824, 16px 20px #ffddb3, 20px 20px #ffddb3, 24px 20px #ffddb3, 28px 20px #ffddb3, 32px 20px #ffddb3, 36px 20px #121824,
+        /* Áo khoác sẫm */
+        16px 28px #121824, 20px 28px #1a202c, 24px 28px #4a5568, 28px 28px #1a202c, 32px 28px #121824,
+        12px 32px #1a202c, 16px 32px #1a202c, 20px 32px #1a202c, 24px 32px #1a202c, 28px 32px #1a202c, 32px 32px #1a202c, 36px 32px #1a202c,
+        /* Lõi tắt năng lượng (Xám tắt) */
+        24px 32px #2d3748;
+}
+
+/* FORM 1: Cyber Alien Form (6s -> 12s) - Giáp đen, Kính năng lượng, Vòng sáng hộ thân */
+.cyber-alien-form {
+    animation: form-cyber-loop 18s steps(1) infinite;
+    /* Tích hợp hiệu ứng Hologram nhiễu sọc bằng bộ lọc filter */
+    filter: drop-shadow(0 0 4px var(--primary-glow));
+    box-shadow:
+        /* Mũ bảo hộ công nghệ cao */
+        16px 4px #000, 20px 4px #05080c, 24px 4px #05080c, 28px 4px #000,
+        12px 8px #000, 16px 8px #121824, 20px 8px #00ff66, 24px 8px #00ff66, 28px 8px #121824, 32px 8px #000,
+        /* Kính Visor quét dữ liệu phát sáng xanh mạnh (Energy Visor) */
+        8px 16px #000, 12px 16px #00ff66, 16px 16px #00ff66, 20px 16px #00ff66, 24px 16px #00ff66, 28px 16px #00ff66, 32px 16px #00ff66, 36px 16px #000,
+        /* Da Alien nhạt */
+        12px 20px #000, 16px 20px #7efcb3, 20px 20px #121824, 24px 20px #121824, 28px 20px #121824, 32px 20px #7efcb3, 36px 20px #000,
+        /* Bộ khung Cyber Suit tích hợp đường chỉ năng lượng (Glowing Lines) */
+        16px 28px #000, 20px 28px #121824, 24px 28px #00ff66, 28px 28px #121824, 32px 28px #000,
+        12px 32px #121824, 16px 32px #00ff66, 20px 32px #121824, 24px 32px #121824, 28px 32px #121824, 32px 32px #00ff66, 36px 32px #121824,
+        8px 36px #000, 12px 36px #121824, 16px 36px #121824, 20px 36px #00ff66, 24px 36px #00ff66, 28px 36px #00ff66, 32px 36px #121824, 36px 36px #121824, 40px 36px #000;
+}
+
+/* FORM 2: Plasma Tech Form (12s -> 18s) - Khối Plasma trắng, cấu trúc bán trong suốt cao cấp */
+.plasma-tech-form {
+    animation: form-plasma-loop 18s steps(1) infinite;
+    filter: drop-shadow(0 0 8px var(--primary-neon));
+    box-shadow:
+        /* Mũ bảo hộ Plasma trắng tinh khiết */
+        16px 4px #fff, 20px 4px #ffffff, 24px 4px #ffffff, 28px 4px #fff,
+        12px 8px #fff, 16px 8px #e2e8f0, 20px 8px #00ff66, 24px 8px #00ff66, 28px 8px #e2e8f0, 32px 8px #fff,
+        /* Hệ thống mắt kép phát sáng cường độ cao */
+        8px 16px #121824, 12px 16px #ffffff, 16px 16px #00ff66, 20px 16px #ffffff, 24px 16px #ffffff, 28px 16px #00ff66, 32px 16px #ffffff, 36px 16px #121824,
+        /* Các mảng Plasma liên kết */
+        12px 20px #fff, 16px 20px #00ff66, 20px 20px #ffffff, 24px 20px #00ff66, 28px 20px #ffffff, 32px 20px #00ff66, 36px 20px #fff,
+        /* Thân lõi Plasma cường hóa tốc độ xung lực */
+        16px 28px #ffffff, 20px 28px #00ff66, 24px 28px #ffffff, 28px 28px #00ff66, 32px 28px #ffffff,
+        12px 32px #ffffff, 16px 32px #ffffff, 20px 32px #00ff66, 24px 32px #ffffff, 28px 32px #00ff66, 32px 32px #ffffff, 36px 32px #ffffff;
+}
+
+/* Chớp sáng lượng tử khi kích hoạt xoay vòng thiết bị (Transformation Flash) */
+.quantum-flash {
+    position: absolute;
+    top: -10px; left: -10px; width: 80px; height: 80px;
+    background: #ffffff;
+    box-shadow: 0 0 40px #ffffff, 0 0 80px var(--primary-neon);
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+    animation: flash-trigger 18s steps(1) infinite;
+}
+
+/* Khối điều hướng hạt số lập phương trôi nổi bao quanh không gian nhân vật */
+.digital-particles {
+    position: absolute;
+    width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    z-index: 2;
+    pointer-events: none;
+}
+.cube-particle {
+    position: absolute;
+    width: 6px; height: 6px;
+    background: var(--primary-neon);
+    box-shadow: 0 0 10px var(--primary-neon);
+}
+.cp-1 { top: 20%; left: 10%; animation: orbit-particle-a 6s infinite linear; }
+.cp-2 { top: 70%; right: 10%; animation: orbit-particle-b 5s infinite linear; }
+.cp-3 { bottom: 15%; left: 25%; animation: orbit-particle-a 7s infinite linear 1s; }
+.cp-4 { top: 40%; right: 20%; animation: orbit-particle-b 4s infinite linear 1.5s; }
+
+
+/* --- HARDCORE SCI-FI ENGINE KEYFRAMES --- */
+
+/* Quản lý thời gian hiển thị đồng bộ giữa 3 dạng thức */
+@keyframes form-human-loop {
+    0%, 33.33% { opacity: 1; filter: none; }
+    33.34%, 100% { opacity: 0; }
+}
+@keyframes form-cyber-loop {
+    0%, 33.33% { opacity: 0; }
+    33.34%, 66.66% { opacity: 1; animation: glitch-flicker 0.4s infinite; }
+    66.67%, 100% { opacity: 0; }
+}
+@keyframes form-plasma-loop {
+    0%, 66.66% { opacity: 0; }
+    66.67%, 98% { opacity: 1; }
+    99%, 100% { opacity: 0; }
+}
+
+/* Kích hoạt tia chớp chói đỉnh điểm tại điểm giao thoa thời gian (6s và 12s) */
+@keyframes flash-trigger {
+    0% { opacity: 0; }
+    31% { opacity: 0; transform: scale(0.5); }
+    33% { opacity: 1; transform: scale(2.5); } /* Chuyển giao sang Cyber Form */
+    35% { opacity: 0; }
+    64% { opacity: 0; transform: scale(0.5); }
+    66% { opacity: 1; transform: scale(2.5); } /* Chuyển giao sang Plasma Form */
+    68% { opacity: 0; }
+    96% { opacity: 0; }
+    98% { opacity: 1; transform: scale(2.5); } /* Trở về thực thể Human */
+    100% { opacity: 0; }
+}
+
+/* Hiệu ứng trôi nổi cân bằng chiều sâu trong trục tọa độ Z */
+@keyframes avatar-float {
+    0%, 100% { transform: scale(2.6) translateY(0px) translateZ(20px); }
+    50% { transform: scale(2.6) translateY(-8px) translateZ(35px); }
+}
+
+/* Điều tốc góc nghiêng của hệ thống đĩa Aura phẳng */
+@keyframes aura-system-rotate {
+    0% { transform: rotateX(65deg) rotateZ(0deg); }
+    100% { transform: rotateX(65deg) rotateZ(360deg); }
+}
+
+@keyframes spin-ring {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes spin-ring-reverse {
+    0% { transform: translate(-50%, -50%) rotate(360deg); }
+    100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+/* Sóng xung kích lan tỏa dứt khoát góc cạnh */
+@keyframes wave-expand {
+    0% { width: 40px; height: 40px; opacity: 1; }
+    100% { width: 220px; height: 220px; opacity: 0; }
+}
+
+/* Quỹ đạo chuyển dịch lập phương giả lập không gian 3D */
+@keyframes orbit-particle-a {
+    0% { transform: translateY(0) translateZ(0px) scale(1); opacity: 0; }
+    50% { opacity: 1; var(--primary-neon); }
+    100% { transform: translateY(-120px) translateZ(50px) scale(0.2); opacity: 0; }
+}
+@keyframes orbit-particle-b {
+    0% { transform: translateX(0) translateY(0) translateZ(-20px); opacity: 0; }
+    50% { opacity: 1; background: #ffffff; }
+    100% { transform: translateX(-40px) translateY(-140px) translateZ(60px); opacity: 0; }
+}
+
+/* Hiệu ứng răng cưa nhiễu sọc đặc trưng của các luồng phát Hologram */
+@keyframes glitch-flicker {
+    0%, 100% { filter: skewX(0deg) contrast(1); }
+    50% { filter: skewX(3deg) contrast(1.2) brightness(1.1); opacity: 0.95; }
+}
+
+        /* --- ADVANCED KEYFRAMES ANIMATIONS --- */
+        @keyframes floating-char {
+            0% { transform: scale(2.5) translateY(0px); }
+            50% { transform: scale(2.5) translateY(-5px); }
+            100% { transform: scale(2.5) translateY(0px); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-4px); }
+        @keyframes pulse-glow {
+            0% { opacity: 0.6; box-shadow: 0 0 10px rgba(0, 255, 102, 0.2); }
+            100% { opacity: 1; box-shadow: 0 0 25px rgba(0, 255, 102, 0.5); }
         }
 
-        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @keyframes float-p {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-25px) scale(0.5); opacity: 0; }
+        }
+
+        /* --- BREAKPOINT COMPATIBILITY --- */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .grid-2col {
-                grid-template-columns: 1fr;
-            }
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .nav-links a {
-                margin: 0 10px;
-            }
-            .hero h1 {
-                font-size: 38px;
-            }
-            .card-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+            body { padding: 8px; }
+            .grid-2col { grid-template-columns: 1fr; gap: 20px; }
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            .nav-links a { margin: 0 10px; font-size: 20px; }
+            .hero h1 { font-size: 40px; }
+            .hero h2 { font-size: 24px; }
+            .card-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .footer-wrapper { flex-direction: column; text-align: center; }
+            .footer-nav { justify-content: center; }
         }
     </style>
 </head>
@@ -330,216 +726,253 @@
 
     <div class="container">
         
-        <!-- HEADER INTERFACE -->
-        <header class="nes-border theme-dark">
-            <div class="logo">LTB_OS v1.0.0</div>
+        <!-- HEADER MODULE -->
+        <header class="alien-border dark-tech">
+            <div class="logo">Le Thanh Binh // TERMINAL</div>
             <nav class="nav-links">
-                <a href="#about">/About</a>
-                <a href="#projects">/Projects</a>
-                <a href="#skills">/Skills</a>
-                <a href="#contact">/Contact</a>
+                <a href="#about">.about</a>
+                <a href="#projects">.projects</a>
+                <a href="#skills">.skills</a>
+                <a href="#contact">.connect</a>
             </nav>
         </header>
 
-        <!-- HERO SECTION -->
-        <section class="hero nes-border theme-primary">
-            <!-- Nhân vật Pixel đại diện -->
-            <div class="pixel-avatar">
-                <div class="pixel-char"></div>
-            </div>
+        <!-- 2 & 3. HERO SECTION WITH ALIEN GLOW & MATRIX GRID -->
+        <section class="hero alien-border neon-glow">
+            <!-- Alien Premium Tech Character -->
+            <!-- ADVANCED 3D ALIEN TECH TRANSFORMATION ENGINE -->
+<div class="avatar-container">
+    <!-- Khối nền hào quang đa lớp & Vòng xoay năng lượng 3D -->
+    <div class="alien-aura-system">
+        <div class="matrix-grid-floor"></div>
+        <div class="energy-ring ring-outer"></div>
+        <div class="energy-ring ring-middle"></div>
+        <div class="energy-ring ring-inner"></div>
+        <div class="pulse-wave"></div>
+    </div>
+    
+    <!-- Hệ thống hạt hạt năng lượng kỹ thuật số hạt trôi nổi -->
+    <div class="digital-particles">
+        <div class="cube-particle cp-1"></div>
+        <div class="cube-particle cp-2"></div>
+        <div class="cube-particle cp-3"></div>
+        <div class="cube-particle cp-4"></div>
+    </div>
+
+    <!-- Khối nhân vật tích hợp chuỗi chuyển hóa Form (Cinematic Matrix) -->
+    <div class="pixel-avatar-wrapper3d">
+        <!-- Chớp sáng khi chuyển Form (Transformation Flash) -->
+        <div class="quantum-flash"></div>
+        
+        <!-- Các trạng thái nhân vật chồng khít lên nhau -->
+        <div class="char-state human-dev-form"></div>
+        <div class="char-state cyber-alien-form"></div>
+        <div class="char-state plasma-tech-form"></div>
+    </div>
+</div>
             
             <h1>bbxntxnxzje</h1>
-            <h2>Software Engineering Student / Backend Developer Intern</h2>
+            <h2>Software Engineering Student // Backend Intern</h2>
             <p>
-                An enthusiastic student based in Ho Chi Minh City, passionate about building efficient, scalable backend structures and interactive code environments.
-            </p>
+                Welcome to my futuristic developer portfolio.            </p>
             <div>
-                <a href="#contact" class="pixel-btn primary">Hire_Me.exe</a>
-                <a href="https://github.com/metrobbxsntxnzje" target="_blank" class="pixel-btn">GitHub_Profile</a>
+                <a href="#contact" class="pixel-btn-futuristic">INITIALIZE_CONTACT</a>
+                <a href="https://github.com/metrobbxsntxnzje" target="_blank" class="pixel-btn-futuristic">ACCESS_GITHUB</a>
             </div>
         </section>
 
-        <!-- TWO COLUMN BOX (ABOUT & EDUCATION) -->
+        <!-- SPLIT MATRIX CONTENT (ABOUT / SUMMARY & EDUCATION) -->
         <div class="grid-2col">
-            <!-- ABOUT / OBJECTIVE -->
-            <section id="about" class="pixel-card nes-border theme-dark">
-                <h3 class="section-title">Objective</h3>
-                <p style="color: var(--text-muted); font-size: 22px;">
-                    Seeking a Software Developer Intern position with a focus on backend development. Eager to collaborate, design underlying system architectures, learn from seasoned engineers, and gain comprehensive hands-on experience in production environments.
+            <!-- MISSION SPECS -->
+            <section id="about" class="pixel-card alien-border dark-tech">
+                <h3 class="section-title">Core_Objective</h3>
+                <p style="color: var(--text-ghost); font-size: 22px;">
+                    Enthusiastic student pursuing an engineering scope. Seeking a Software Developer Intern node with structural backend assignments. Driven to build highly robust algorithmic data chains, adapt inside professional pipelines, and accelerate output with local architecture models.
                 </p>
                 <br>
-                <h3 class="section-title">Hobbies</h3>
-                <div class="pixel-tag">Gym Training & Fitness</div>
+                <h3 class="section-title">Human_Interests</h3>
+                <div class="pixel-chip">Gym Training & Fitness</div>
+                <div class="pixel-chip">Sci-Fi Universes</div>
             </section>
 
-            <!-- EDUCATION -->
-            <section id="education" class="pixel-card nes-border theme-dark">
-                <h3 class="section-title">Education</h3>
+            <!-- ACADEMIC LOGS -->
+            <section id="education" class="pixel-card alien-border dark-tech">
+                <h3 class="section-title">Education_Registry</h3>
                 <div class="card-header">
                     <span class="card-title" style="color: #fff;">Saigon University</span>
-                    <span class="card-date">2022 - Present</span>
+                    <span class="card-date">[ 2022 - PRESENT ]</span>
                 </div>
-                <p style="color: var(--primary); font-size: 22px; margin-bottom: 5px;">Final-year Information Technology student</p>
-                <p style="color: var(--text-muted);">Focusing on advanced computing paradigms, data frameworks, algorithm tracking, and modern development methodology systems.</p>
+                <p style="color: var(--primary-neon); font-size: 22px; margin-bottom: 8px;">Final-year Information Technology student</p>
             </section>
         </div>
 
-        <!-- PROJECTS SECTION -->
+        <!-- 4. UPGRADED PROJECTS SECTION WITH MODERNISED HOVER EFFECT -->
         <section id="projects">
-            <h3 class="section-title">Core_Projects</h3>
+            <h3 class="section-title">Projects</h3>
 
             <!-- Project 1 -->
-            <div class="pixel-card nes-border theme-dark">
+            
+            <div class="pixel-card alien-border dark-tech">
                 <div class="card-header">
-                    <span class="card-title">1. RAG-based Question Answering System</span>
+                    <span class="card-title">01 // RAG-based Question Answering System</span>
                     <span class="card-date">2026</span>
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li>Built a robust RAG pipeline supporting PDF/DOCX multi-document ingestion.</li>
-                        <li>Implemented high-efficiency hybrid retrieval combining FAISS semantic dense vectors with BM25 keyword matching strings.</li>
-                        <li>Ranked context payloads accurately using Reciprocal Rank Fusion architectures.</li>
-                        <li>Integrated HuggingFace structural embeddings and custom local LLM inference engines utilizing Ollama runtimes.</li>
-                        <li>Applied specialized metadata tracking, indexing filters, and data deduplication.</li>
+                        <li>Assembled a custom RAG infrastructure supporting ingestion of multi-format structures (PDF/DOCX).</li>
+                        <li>Configured robust hybrid retrieval clusters mixing FAISS semantic vectors and keyword-optimized BM25 tokens.</li>
+                        <li>Ranked output text chunks dynamically deploying accurate Reciprocal Rank Fusion algorithms.</li>
+                        <li>Bound HuggingFace localized array embeddings with low-latency local LLM runtimes using Ollama.</li>
+                        <li>Implemented structural metadata filtering and comprehensive source deduplication.</li>
                     </ul>
                     <div class="card-tags">
-                        <span class="pixel-tag">Python</span>
-                        <span class="pixel-tag">LangChain</span>
-                        <span class="pixel-tag">FAISS</span>
-                        <span class="pixel-tag">Ollama</span>
-                        <span class="pixel-tag">HuggingFace</span>
+                        <span class="pixel-chip">Python</span>
+                        <span class="pixel-chip">LangChain</span>
+                        <span class="pixel-chip">FAISS</span>
+                        <span class="pixel-chip">Ollama</span>
+                        <span class="pixel-chip">HuggingFace</span>
                     </div>
                 </div>
             </div>
 
             <!-- Project 2 -->
-            <div class="pixel-card nes-border theme-dark">
+            <div class="pixel-card alien-border dark-tech">
+                
                 <div class="card-header">
-                    <span class="card-title">2. Movie Discovery Web App</span>
+                    <span class="card-title">02 // Movie Discovery Web App</span>
                     <span class="card-date">2026</span>
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li>Integrated third-party TMDB REST API hooks to actively parse live query data streams, movie stats, and rich trailers.</li>
-                        <li>Constructed local search indexes, dynamic item category filters, and isolated dynamic routes via Vue Router stacks.</li>
-                        <li>Managed multiple concurrent asynchronous state engines through Axios handlers alongside fallback screen loads.</li>
+                        <li>Linked TMDB REST endpoints to actively pull, process, and map live data sequences and media feeds.</li>
+                        <li>Engineered explicit category filters and isolated SPA navigation nodes via Vue Router modules.</li>
+                        <li>Organized persistent asynchronous communication nodes with Axios interceptors.</li>
                     </ul>
                     <div class="card-tags">
-                        <span class="pixel-tag">Vue 3</span>
-                        <span class="pixel-tag">JavaScript</span>
-                        <span class="pixel-tag">TMDB API</span>
-                        <span class="pixel-tag">Axios</span>
-                        <span class="pixel-tag">Vue Router</span>
+                        <span class="pixel-chip">Vue 3</span>
+                        <span class="pixel-chip">JavaScript</span>
+                        <span class="pixel-chip">TMDB API</span>
+                        <span class="pixel-chip">Axios</span>
                     </div>
                 </div>
             </div>
 
             <!-- Project 3 -->
-            <div class="pixel-card nes-border theme-dark">
+            <div class="pixel-card alien-border dark-tech">
+              
+                
                 <div class="card-header">
-                    <span class="card-title">3. Training Program Management System</span>
+                    <span class="card-title">03 // Training Program Management System</span>
                     <span class="card-date">2025</span>
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li>Engineered a fully secure system infrastructure to handle academic schedules and system-wide curriculum paths.</li>
-                        <li>Assembled decoupled functional controllers and concrete data mapping services using an MVC blueprint.</li>
-                        <li>Shipped integrated control blocks for bulk course scheduling, curriculum mappings, and safe data updates.</li>
-                        <li>Rendered validated server-side UI presentation contexts built over flexible JSP engines.</li>
+                        <li>Engineered a production enterprise matrix database to structure curriculum frameworks and track allocations.</li>
+                        <li>Separated core logic processes from endpoint handlers adhering strictly to Spring MVC layers.</li>
+                        <li>Deployed transactional database safehouses to manage student logs, records updates, and structural edits.</li>
+                        <li>Built intuitive server-rendered responsive forms wrapped in validated JSP contexts.</li>
                     </ul>
                     <div class="card-tags">
-                        <span class="pixel-tag">Spring Boot</span>
-                        <span class="pixel-tag">Java</span>
-                        <span class="pixel-tag">MySQL</span>
-                        <span class="pixel-tag">MVC Pattern</span>
-                        <span class="pixel-tag">JSP</span>
+                        <span class="pixel-chip">Spring Boot</span>
+                        <span class="pixel-chip">Java</span>
+                        <span class="pixel-chip">MySQL</span>
+                        <span class="pixel-chip">MVC Pattern</span>
                     </div>
                 </div>
             </div>
 
             <!-- Project 4 -->
-            <div class="pixel-card nes-border theme-dark">
+            <div class="pixel-card alien-border dark-tech">
                 <div class="card-header">
-                    <span class="card-title">4. Quiz & Examination Management System</span>
+                    <span class="card-title">04 // Quiz & Examination Management System</span>
                     <span class="card-date">2025</span>
                 </div>
                 <div class="card-body">
                     <ul>
-                        <li>Programmed a reliable desktop utility layout built to construct, host, and grade multiple-choice test banks.</li>
-                        <li>Developed secure assessment templates, custom question generators, and isolated grading computations.</li>
-                        <li>Mapped optimized schema models back to active SQL Server file instances for structured data retrieval.</li>
-                        <li>Enforced OOP architecture strategies separating layout components completely from processing boundaries.</li>
+                        <li>Coded a localized desktop terminal designed for creating, compiling, and validating multiple-choice testing pools.</li>
+                        <li>Wrote evaluation handlers for instant grading calculations alongside customizable secure question templates.</li>
+                        <li>Mapped physical dataset entities to SQL Server blocks using specialized C# communication libraries.</li>
+                        <li>Preserved modular software maintainability using strict Object-Oriented Programming (OOP).</li>
                     </ul>
                     <div class="card-tags">
-                        <span class="pixel-tag">C#</span>
-                        <span class="pixel-tag">WinForms</span>
-                        <span class="pixel-tag">.NET</span>
-                        <span class="pixel-tag">SQL Server</span>
-                        <span class="pixel-tag">OOP</span>
+                        <span class="pixel-chip">C#</span>
+                        <span class="pixel-chip">WinForms</span>
+                        <span class="pixel-chip">.NET</span>
+                        <span class="pixel-chip">SQL Server</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- TECHNICAL SKILLS SECTION -->
-        <section id="skills" class="pixel-card nes-border theme-dark">
-            <h3 class="section-title">Technical_Skills</h3>
+        <!-- TECHNICAL COMPLIANCE MATRICES -->
+        <section id="skills" class="pixel-card alien-border dark-tech">
+            <h3 class="section-title">Technical_Capabilities</h3>
             
-            <div style="margin-bottom: 15px;">
-                <p style="color: var(--text-main); margin-bottom: 5px;">[Languages]</p>
-                <span class="pixel-tag">Java</span> <span class="pixel-tag">C#</span> <span class="pixel-tag">Python</span> 
-                <span class="pixel-tag">JavaScript</span> <span class="pixel-tag">SQL</span> <span class="pixel-tag">C/C++</span>
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--primary-neon); margin-bottom: 8px;">[ Core_Languages ]</p>
+                <span class="pixel-chip">Java</span> <span class="pixel-chip">C#</span> <span class="pixel-chip">Python</span> 
+                <span class="pixel-chip">JavaScript</span> <span class="pixel-chip">SQL</span> <span class="pixel-chip">C/C++</span>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <p style="color: var(--text-main); margin-bottom: 5px;">[Frameworks & Libraries]</p>
-                <span class="pixel-tag">Spring Boot</span> <span class="pixel-tag">Vue 3</span> <span class="pixel-tag">.NET WinForms</span> 
-                <span class="pixel-tag">LangChain</span> <span class="pixel-tag">Axios</span> <span class="pixel-tag">React</span>
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--primary-neon); margin-bottom: 8px;">[ Architecture_Frameworks ]</p>
+                <span class="pixel-chip">Spring Boot</span> <span class="pixel-chip">Vue 3</span> <span class="pixel-chip">.NET WinForms</span> 
+                <span class="pixel-chip">LangChain</span> <span class="pixel-chip">React</span>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <p style="color: var(--text-main); margin-bottom: 5px;">[Databases & Storage]</p>
-                <span class="pixel-tag">MySQL</span> <span class="pixel-tag">SQL Server</span> <span class="pixel-tag">FAISS (Vector DB)</span>
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--primary-neon); margin-bottom: 8px;">[ Storage_Environments ]</p>
+                <span class="pixel-chip">MySQL</span> <span class="pixel-chip">SQL Server</span> <span class="pixel-chip">FAISS (Vectors)</span>
             </div>
 
-            <div style="margin-bottom: 15px;">
-                <p style="color: var(--text-main); margin-bottom: 5px;">[Developer Tools]</p>
-                <span class="pixel-tag">Git</span> <span class="pixel-tag">GitHub</span> <span class="pixel-tag">Postman</span> 
-                <span class="pixel-tag">Ollama</span> <span class="pixel-tag">Figma</span> <span class="pixel-tag">Overleaf</span>
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--primary-neon); margin-bottom: 8px;">[ Engineering_Tools ]</p>
+                <span class="pixel-chip">Git // GitHub</span> <span class="pixel-chip">Postman</span> 
+                <span class="pixel-chip">Ollama Terminal</span> <span class="pixel-chip">Figma UI</span>
             </div>
 
             <div>
-                <p style="color: var(--text-main); margin-bottom: 5px;">[Core Architectural Concepts]</p>
-                <span class="pixel-tag">REST API</span> <span class="pixel-tag">MVC Pattern</span> <span class="pixel-tag">OOP</span> 
-                <span class="pixel-tag">RAG Pipeline</span> <span class="pixel-tag">SPA (Single Page App)</span>
+                <p style="color: var(--primary-neon); margin-bottom: 8px;">[ Theoretical_Paradigms ]</p>
+                <span class="pixel-chip">REST APIs</span> <span class="pixel-chip">MVC Pattern</span> <span class="pixel-chip">OOP Logic</span> 
+                <span class="pixel-chip">RAG Pipelines</span> <span class="pixel-chip">SPA Systems</span>
             </div>
         </section>
 
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="pixel-card nes-border theme-primary">
-            <h3 class="section-title" style="color: var(--bg-color);">Establish_Connection</h3>
-            <div class="grid-2col" style="color: var(--bg-color);">
+        <!-- CONTACT NODE -->
+        <section id="contact" class="pixel-card alien-border neon-glow" style="background: rgba(0, 255, 102, 0.02);">
+            <h3 class="section-title">Initialize_Handshake</h3>
+            <div class="grid-2col">
                 <div>
                     <ul class="info-list">
-                        <li><span style="color: var(--bg-color); font-weight: bold;">Loc:</span> Ho Chi Minh City, VN</li>
-                        <li><span style="color: var(--bg-color); font-weight: bold;">Email:</span> <a href="mailto:binhle.230204@gmail.com" style="color: #ffffff; text-decoration: underline;">binhle.230204@gmail.com</a></li>
-                        <li><span style="color: var(--bg-color); font-weight: bold;">Phone:</span> </li>
-                        <li><span style="color: var(--bg-color); font-weight: bold;">GitHub:</span> <a href="https://github.com/metrobbxsntxnzje" target="_blank" style="color: #ffffff; text-decoration: underline;">github.com/metrobbxsntxnzje</a></li>
+                        <li><span>Location:</span> Ho Chi Minh City, Vietnam</li>
+                        <li><span>COMMS:</span> <a href="mailto:binhle.230204@gmail.com" style="text-decoration: underline;">binhle.230204@gmail.com</a></li>
+                        <li><span>Phone:</span></li>
+                        <li><span>REPOSITORY:</span> <a href="https://github.com/metrobbxsntxnzje" target="_blank" style="text-decoration: underline;">github.com/metrobbxsntxnzje</a></li>
                     </ul>
                 </div>
-                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
-                    <p style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">PING LTB_SERVER...</p>
-                    <p style="font-size: 20px;">Ready for new engineering milestones.</p>
+                <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; border-left: 4px dashed var(--border-core); padding-left: 20px;">
+                    <p style="font-size: 26px; color: var(--primary-neon); font-weight: bold; margin-bottom: 8px; animation: pulse-glow 1s infinite alternate;">SYSTEM READY.</p>
+                    <p style="font-size: 20px; color: var(--text-ghost);">Awaiting system integration data packages...</p>
                 </div>
             </div>
         </section>
 
-        <!-- FOOTER -->
-        <footer>
-            <p>2026 Le Thanh Binh.</p>
-        </footer>
-
     </div>
+
+    <!-- 3. PREMIUM HIGH-CONTRAST READABLE FOOTER -->
+    <footer class="alien-border">
+        <div class="footer-wrapper">
+            <div class="footer-info">
+                : <span>Le Thanh Binh</span> // ARCHITECTURE: <span>Backend / Software Dev</span>
+            </div>
+            <div class="footer-nav">
+                <a href="mailto:binhle.230204@gmail.com">Email_Terminal</a>
+                <a href="https://github.com/metrobbxsntxnzje" target="_blank">Git_Core</a>
+            </div>
+            <div class="footer-credits">
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
